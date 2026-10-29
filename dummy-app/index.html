@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI Error Debugger - Dummy Test Web Application for triggering real browser network failures." />
+  <title>AI Error Debugger - Test Bench</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="badge-tag">Test Environment</div>
+      <h1 class="app-title">AI Error Debugger</h1>
+      <p class="app-subtitle">
+        Trigger network anomalies and HTTP failures below. If the <strong>AI Error Debugger</strong> Chrome extension is active, it will intercept the request, query local Ollama (<code>llama3.2</code>), and present an AI diagnosis overlay in the bottom-right corner.
+      </p>
+    </header>
+
+    <!-- Trigger Action Cards -->
+    <main class="cards-grid">
+      <!-- Card 1: Connection Refused -->
+      <section class="card" id="card-payment">
+        <div class="card-icon error-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+            <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+            <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+            <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+            <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+            <line x1="12" y1="20" x2="12.01" y2="20"></line>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h2 class="card-title">Payment API</h2>
+          <p class="card-desc">Calls <code>http://localhost:9999/api/pay</code> where nothing is listening, triggering a network-level <code>ERR_CONNECTION_REFUSED</code>.</p>
+        </div>
+        <button class="btn btn-danger" id="btn-pay">
+          <span>Trigger Payment API</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </section>
+
+      <!-- Card 2: 404 Missing Route -->
+      <section class="card" id="card-404">
+        <div class="card-icon warning-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h2 class="card-title">Missing Resource</h2>
+          <p class="card-desc">Calls <code>http://localhost:3000/api/missing</code> which responds with a hardcoded <code>HTTP 404 Not Found</code> error status.</p>
+        </div>
+        <button class="btn btn-warning" id="btn-404">
+          <span>Trigger 404</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </section>
+
+      <!-- Card 3: 500 Crash Route -->
+      <section class="card" id="card-500">
+        <div class="card-icon crash-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h2 class="card-title">Server Crash</h2>
+          <p class="card-desc">Calls <code>http://localhost:3000/api/crash</code> which triggers an unhandled simulation error yielding <code>HTTP 500 Internal Server Error</code>.</p>
+        </div>
+        <button class="btn btn-crash" id="btn-500">
+          <span>Trigger 500</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </section>
+    </main>
+
+    <!-- Visual Status Line Banner (Errors are NOT swallowed visually) -->
+    <section class="status-section" id="status-container" aria-live="polite">
+      <div class="status-header">
+        <span class="status-indicator-dot" id="status-indicator-dot"></span>
+        <span class="status-title">Page Status Monitor</span>
+      </div>
+      <div class="status-line-box" id="status-line">
+        Ready. Click any button above to simulate a network or server failure.
+      </div>
+    </section>
+
+    <!-- Architecture & Verification Guide -->
+    <footer class="app-footer">
+      <div class="footer-step">
+        <span class="step-num">1</span>
+        <span>Click a trigger button</span>
+      </div>
+      <div class="footer-arrow">→</div>
+      <div class="footer-step">
+        <span class="step-num">2</span>
+        <span>Extension intercepts error</span>
+      </div>
+      <div class="footer-arrow">→</div>
+      <div class="footer-step">
+        <span class="step-num">3</span>
+        <span>Ollama generates diagnosis</span>
+      </div>
+      <div class="footer-arrow">→</div>
+      <div class="footer-step">
+        <span class="step-num">4</span>
+        <span>Glassmorphism fix appears</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TaskFlow Pro - Enterprise Task & Sprint Management Dashboard" />
+  <title>TaskFlow Pro | Sprint 42 Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app-layout">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <div class="logo-mark">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          <span class="brand-name">TaskFlow<span class="pro-tag">PRO</span></span>
+        </div>
+
+        <div class="workspace-card">
+          <div class="ws-avatar">AC</div>
+          <div class="ws-info">
+            <span class="ws-title">Acme Core Platform</span>
+            <span class="ws-tier">Enterprise • v4.2</span>
+          </div>
+          <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-label">WORKSPACE</div>
+        <a href="#dashboard" class="nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Sprint 42 Board</span>
+          <span class="nav-badge">14</span>
+        </a>
+        <a href="#backlog" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          <span>Product Backlog</span>
+        </a>
+        <a href="#milestones" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span>Milestones</span>
+        </a>
+
+        <div class="nav-group-label">OPERATIONS</div>
+        <a href="#analytics" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span>Metrics & Velocity</span>
+        </a>
+        <a href="#team" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>Engineering Team</span>
+        </a>
+      </nav>
+
+      <!-- EXPORT MICROSERVICE CARD (BUG 3 TRIGGER) -->
+      <div class="sidebar-microservice-card">
+        <div class="service-header">
+          <div class="service-pulse-dot"></div>
+          <span class="service-title">PDF Export Worker</span>
+        </div>
+        <p class="service-desc">Generates compiled executive sprint report via analytics microservice on port 5555.</p>
+        <button class="btn btn-export" id="btn-export-pdf">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span id="export-btn-label">Export to PDF</span>
+        </button>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="system-status">
+          <span class="status-indicator"></span>
+          <span>Core API Cluster • 99.98%</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="main-content">
+      <!-- TOP HEADER BAR -->
+      <header class="top-header">
+        <div class="header-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" placeholder="Search tasks, pull requests, epics..." class="search-input" />
+          <span class="keyboard-hint">⌘K</span>
+        </div>
+
+        <div class="header-actions">
+          <button class="header-icon-btn" aria-label="Notifications" title="Notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <span class="notif-dot"></span>
+          </button>
+
+          <!-- USER PROFILE WIDGET (BUG 1 TRIGGER: 404 Typo) -->
+          <div class="user-profile-widget" id="user-profile-widget">
+            <div class="profile-avatar-wrapper">
+              <div class="avatar-placeholder" id="user-avatar-placeholder">
+                <span class="spinner-micro" id="profile-spinner"></span>
+              </div>
+            </div>
+            <div class="profile-info">
+              <span class="profile-name" id="user-name-display">Loading profile...</span>
+              <span class="profile-role" id="user-role-display">Staff Platform Eng</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- DASHBOARD BODY -->
+      <div class="dashboard-body">
+        <!-- PAGE TITLE & SPRINT INFO -->
+        <div class="page-header-row">
+          <div>
+            <div class="breadcrumb">TaskFlow / Sprint Tracking / <strong>Sprint 42</strong></div>
+            <h1 class="page-title">Sprint 42: Core Infrastructure & Resilience</h1>
+          </div>
+          <div class="header-badges">
+            <span class="badge-sprint-active">● Active Sprint</span>
+            <span class="badge-sprint-date">4 Days Remaining</span>
+          </div>
+        </div>
+
+        <!-- SAAS STATS CARDS -->
+        <section class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-label">Tasks In Flight</span>
+            <div class="metric-value-row">
+              <span class="metric-number">14</span>
+              <span class="metric-trend trend-up">+3 today</span>
+            </div>
+            <div class="metric-bar"><div class="metric-fill fill-tasks" style="width: 68%;"></div></div>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-label">Sprint Velocity</span>
+            <div class="metric-value-row">
+              <span class="metric-number">88.4%</span>
+              <span class="metric-trend trend-up">On schedule</span>
+            </div>
+            <div class="metric-bar"><div class="metric-fill fill-velocity" style="width: 88%;"></div></div>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-label">Pull Requests Merged</span>
+            <div class="metric-value-row">
+              <span class="metric-number">28</span>
+              <span class="metric-trend trend-neutral">9 in review</span>
+            </div>
+            <div class="metric-bar"><div class="metric-fill fill-prs" style="width: 75%;"></div></div>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-label">Database Pool Health</span>
+            <div class="metric-value-row">
+              <span class="metric-number" id="db-health-stat">Degraded</span>
+              <span class="metric-trend trend-down">Port 5432 alert</span>
+            </div>
+            <div class="metric-bar"><div class="metric-fill fill-warning" style="width: 42%;"></div></div>
+          </div>
+        </section>
+
+        <!-- TASK CREATION SECTION (BUG 2 TRIGGER: 500 DB Crash) -->
+        <section class="task-creation-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+              <h2>Add Sprint Task</h2>
+            </div>
+            <span class="panel-subtitle">Persists new task entity directly to PostgreSQL primary cluster</span>
+          </div>
+
+          <div class="creation-form">
+            <div class="input-field-wrapper">
+              <input
+                type="text"
+                id="new-task-title"
+                class="form-input"
+                placeholder="e.g. Implement OAuth2 refresh token rotation in Auth Gateway..."
+                value="Migrate Redis session cache to distributed sentinel cluster"
+              />
+            </div>
+
+            <div class="dropdown-wrapper">
+              <select id="new-task-priority" class="form-select">
+                <option value="Critical">Critical Priority</option>
+                <option value="High" selected>High Priority</option>
+                <option value="Medium">Medium Priority</option>
+              </select>
+            </div>
+
+            <div class="dropdown-wrapper">
+              <select id="new-task-tag" class="form-select">
+                <option value="Backend" selected>Backend</option>
+                <option value="DevOps">DevOps</option>
+                <option value="Security">Security</option>
+              </select>
+            </div>
+
+            <button class="btn btn-primary" id="btn-save-task">
+              <svg class="save-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              <span id="save-task-label">Save Task</span>
+            </button>
+          </div>
+          <div class="action-status-line" id="task-action-status"></div>
+        </section>
+
+        <!-- TASKS LIST SECTION -->
+        <section class="task-list-section">
+          <div class="list-toolbar">
+            <div class="filter-tabs">
+              <button class="tab-btn active">All Tasks <span class="tab-count">6</span></button>
+              <button class="tab-btn">In Progress <span class="tab-count">3</span></button>
+              <button class="tab-btn">Review <span class="tab-count">2</span></button>
+              <button class="tab-btn">Done <span class="tab-count">1</span></button>
+            </div>
+            <div class="sort-action">
+              <span>Sort by: Priority</span>
+            </div>
+          </div>
+
+          <div class="task-items-container" id="task-items-container">
+            <!-- Task 1 -->
+            <div class="task-row">
+              <label class="custom-checkbox">
+                <input type="checkbox" checked />
+                <span class="checkmark"></span>
+              </label>
+              <div class="task-main">
+                <span class="task-title strike">Audit TLS 1.3 cipher suites on reverse proxy endpoints</span>
+                <div class="task-metadata">
+                  <span class="task-id">TASK-1082</span>
+                  <span class="tag tag-security">Security</span>
+                  <span class="due-date">Completed yesterday</span>
+                </div>
+              </div>
+              <span class="priority-pill priority-medium">Medium</span>
+              <div class="task-assignee" title="Dev Lead">SC</div>
+            </div>
+
+            <!-- Task 2 -->
+            <div class="task-row">
+              <label class="custom-checkbox">
+                <input type="checkbox" />
+                <span class="checkmark"></span>
+              </label>
+              <div class="task-main">
+                <span class="task-title">Scale Kafka consumer groups for telemetry ingestion</span>
+                <div class="task-metadata">
+                  <span class="task-id">TASK-1083</span>
+                  <span class="tag tag-devops">DevOps</span>
+                  <span class="due-date">Due in 2 days</span>
+                </div>
+              </div>
+              <span class="priority-pill priority-high">High</span>
+              <div class="task-assignee" title="Platform Eng">AK</div>
+            </div>
+
+            <!-- Task 3 -->
+            <div class="task-row">
+              <label class="custom-checkbox">
+                <input type="checkbox" />
+                <span class="checkmark"></span>
+              </label>
+              <div class="task-main">
+                <span class="task-title">Investigate PostgreSQL pool connection leak under high burst concurrency</span>
+                <div class="task-metadata">
+                  <span class="task-id">TASK-1084</span>
+                  <span class="tag tag-backend">Database</span>
+                  <span class="due-date">Due tomorrow</span>
+                </div>
+              </div>
+              <span class="priority-pill priority-critical">Critical</span>
+              <div class="task-assignee" title="DBA">JD</div>
+            </div>
+
+            <!-- Task 4 -->
+            <div class="task-row">
+              <label class="custom-checkbox">
+                <input type="checkbox" />
+                <span class="checkmark"></span>
+              </label>
+              <div class="task-main">
+                <span class="task-title">Refactor GraphQL schema federation for microservices</span>
+                <div class="task-metadata">
+                  <span class="task-id">TASK-1085</span>
+                  <span class="tag tag-backend">Backend</span>
+                  <span class="due-date">Due in 4 days</span>
+                </div>
+              </div>
+              <span class="priority-pill priority-medium">Medium</span>
+              <div class="task-assignee" title="Backend Eng">MR</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

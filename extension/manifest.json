@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "AI Error Debugger",
+  "version": "1.0.0",
+  "description": "Detects network errors in real time, diagnoses them via local Ollama AI (llama3.2), and renders instant glassmorphism fixes.",
+  "permissions": [
+    "webRequest",
+    "notifications",
+    "tabs",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "http://localhost:11434/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "AI Error Debugger"
+  }
+}
